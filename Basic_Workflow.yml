@@ -1,0 +1,34 @@
+name: "Hello World Workflow"
+
+on:
+  push:
+    branches:
+      - main # Trigger on push to the main branch
+  pull_request:
+    branches:
+      - main # Trigger on PRs targeting the main branch
+  workflow_dispatch: # Trigger manually via user input
+    inputs:
+      name:
+        description: "Your name (optional)"
+        required: false
+        default: "World"
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Print Hello World
+      run: |
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          echo "Hello, ${{ github.event.inputs.name }}!"
+        elif [ "${{ github.event_name }}" == "push" ]; then
+          echo "Hello, World! A push was made to the repository."
+        elif [ "${{ github.event_name }}" == "pull_request" ]; then
+          echo "Hello, World! A pull request was opened or updated."
+        else
+          echo "Hello, World! Trigger unknown."
