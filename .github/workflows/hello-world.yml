@@ -1,4 +1,4 @@
-name: Trigger Build Workflow
+name: Hello World Workflow
 
 on:
   push:
@@ -6,8 +6,15 @@ on:
       - main
 
 jobs:
+  hello-world:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Print "Hello, World!"
+      - name: Hello World
+        run: echo "Hello, World!"
+
   call-build-workflow:
-    uses: ./.github/workflows/build.yml
+    uses: ./.github/workflows/Build.yml
     with:
       java-version: '11'
       distribution: 'temurin'
