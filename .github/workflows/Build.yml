@@ -1,0 +1,32 @@
+name: Build with external file
+
+on:
+  workflow_call:
+    inputs:
+      java-version:
+        description: 'Java version to use'
+        required: true
+        default: '11'
+      distribution:
+        description: 'JDK distribution'
+        required: true
+        default: 'temurin
+
+jobs:
+  build-and-test-dev:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout the Code
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set Up Java
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      # Step 3: Build the Project
+      - name: Build Project
+        run: mvn clean install
